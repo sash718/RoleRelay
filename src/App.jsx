@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link, NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import FeatureIntro from './components/FeatureIntro.jsx';
 import DesignPrototype from './components/DesignPrototype.jsx';
+import OpportunityDiscovery from './features/opportunities/OpportunityDiscovery.jsx';
 
 const features = [
   {
@@ -84,7 +85,9 @@ export default function App() {
         <main id="main-content" ref={mainRef} tabIndex={-1} className="page-shell">
         <Routes>
           <Route path="/" element={<Navigate to="/opportunities" replace />} />
-          {features.map((feature) => (
+          <Route path="/opportunities" element={<OpportunityDiscovery />} />
+          <Route path="/opportunities/:opportunityId" element={<OpportunityDiscovery />} />
+          {features.filter((feature) => feature.path !== '/opportunities').map((feature) => (
             <Route key={feature.path} path={feature.path} element={<FeatureIntro {...feature} />} />
           ))}
           <Route path="/design" element={<DesignPrototype />} />
