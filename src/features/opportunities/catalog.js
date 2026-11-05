@@ -36,8 +36,12 @@ function isValidEvent(event) {
     && isNonEmptyString(event.description)
     && isHttpUrl(event.sourceUrl)
     && (event.registrationUrl === null || isHttpUrl(event.registrationUrl))
-    && isNonEmptyString(event.lastVerifiedAt)
-    && !Number.isNaN(Date.parse(event.lastVerifiedAt))
+    && typeof event.isDemo === 'boolean'
+    && (
+      event.isDemo
+        ? event.lastVerifiedAt === null
+        : isNonEmptyString(event.lastVerifiedAt) && !Number.isNaN(Date.parse(event.lastVerifiedAt))
+    )
   );
 }
 

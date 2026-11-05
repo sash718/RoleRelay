@@ -19,7 +19,7 @@ const features = [
     path: '/students',
     label: 'Students',
     title: 'Explore possible contributors.',
-    description: 'Future local candidate discovery will live here.',
+    description: 'Preview the planned local directory for candidate profiles, skills, and contribution details.',
     owner: 'Member 2',
     scope: 'Local candidate profiles, skill filters, and contribution details.',
   },
@@ -55,7 +55,11 @@ export default function App() {
 
   useEffect(() => {
     const feature = features.find((item) => item.path === pathname);
-    const pageTitle = pathname === '/design' ? 'Design preview' : feature?.label ?? 'Page not found';
+    const pageTitle = pathname === '/design'
+      ? 'Design preview'
+      : pathname.startsWith('/opportunities/')
+        ? 'Opportunities'
+        : feature?.label ?? 'Page not found';
     document.title = `${pageTitle} | RoleRelay`;
     mainRef.current?.focus();
   }, [pathname]);
