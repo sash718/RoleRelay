@@ -3,6 +3,7 @@ import { Link, NavLink, Navigate, Route, Routes, useLocation } from 'react-route
 import FeatureIntro from './components/FeatureIntro.jsx';
 import DesignPrototype from './components/DesignPrototype.jsx';
 import OpportunityDiscovery from './features/opportunities/OpportunityDiscovery.jsx';
+import MatchingExplorer from './features/matching/MatchingExplorer.jsx';
 
 const features = [
   {
@@ -87,9 +88,12 @@ export default function App() {
           <Route path="/" element={<Navigate to="/opportunities" replace />} />
           <Route path="/opportunities" element={<OpportunityDiscovery />} />
           <Route path="/opportunities/:opportunityId" element={<OpportunityDiscovery />} />
-          {features.filter((feature) => feature.path !== '/opportunities').map((feature) => (
-            <Route key={feature.path} path={feature.path} element={<FeatureIntro {...feature} />} />
-          ))}
+          <Route path="/matching" element={<MatchingExplorer />} />
+          {features
+            .filter((feature) => feature.path !== '/opportunities' && feature.path !== '/matching')
+            .map((feature) => (
+              <Route key={feature.path} path={feature.path} element={<FeatureIntro {...feature} />} />
+            ))}
           <Route path="/design" element={<DesignPrototype />} />
           <Route path="*" element={<section><h1>Page not found</h1><p>This address does not match a RoleRelay page.</p><Link to="/opportunities">Return to opportunities</Link></section>} />
         </Routes>
