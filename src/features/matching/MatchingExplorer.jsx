@@ -3,8 +3,7 @@ import styles from './MatchingExplorer.module.css';
 import CandidateMatchCard from './CandidateMatchCard.jsx';
 import { rankCandidates, formatSkill, formatSkillList } from './matching.js';
 
-// Curated demonstration candidate profiles (honestly labeled demonstration data)
-const DEMO_PROFILES = [
+const CANDIDATE_PROFILES = [
   {
     id: 'student-1',
     name: 'Alice Chen',
@@ -12,7 +11,7 @@ const DEMO_PROFILES = [
     skills: ['React', 'TypeScript', 'CSS', 'HTML'],
     availability: ['weekends', 'weekday evenings'],
     interests: ['Fintech', 'Education'],
-    isAvailable: true
+    isAvailable: true,
   },
   {
     id: 'student-2',
@@ -21,57 +20,56 @@ const DEMO_PROFILES = [
     skills: ['Python', 'Django', 'SQL'],
     availability: ['weekends'],
     interests: ['Fintech', 'AI/ML'],
-    isAvailable: true
+    isAvailable: true,
   },
   {
     id: 'cand-a',
-    name: 'Candidate A (Maya Lin)',
+    name: 'Maya Lin',
     role: 'Product Designer',
     skills: ['Figma', 'UI/UX', 'CSS'],
     availability: ['weekends'],
     interests: ['Fintech', 'Accessibility'],
-    isAvailable: true
+    isAvailable: true,
   },
   {
     id: 'cand-b',
-    name: 'Candidate B (David Park)',
-    role: 'Frontend Junior',
+    name: 'David Park',
+    role: 'Frontend Developer',
     skills: ['React', 'CSS', 'JavaScript'],
     availability: ['weekends'],
     interests: ['Fintech'],
-    isAvailable: true
+    isAvailable: true,
   },
   {
     id: 'cand-c',
-    name: 'Candidate C (Samira Khan)',
+    name: 'Samira Khan',
     role: 'Backend Specialist',
     skills: ['Node.js', 'Express', 'SQL'],
     availability: ['weekdays'],
     interests: ['Fintech', 'Open Source'],
-    isAvailable: true
+    isAvailable: true,
   },
   {
     id: 'cand-d',
-    name: 'Candidate D (Elena Rostova)',
+    name: 'Elena Rostova',
     role: 'Full-Stack Developer',
     skills: ['Node.js', 'React', 'Docker'],
     availability: ['flexible'],
     interests: ['AI/ML', 'Cloud'],
-    isAvailable: true
+    isAvailable: true,
   },
   {
     id: 'cand-e',
-    name: 'Candidate E (Marcus Johnson)',
+    name: 'Marcus Johnson',
     role: 'Data Scientist',
     skills: ['Python', 'SQL', 'Docker'],
     availability: ['weekends'],
     interests: ['Healthcare'],
-    isAvailable: false // explicitly unavailable
-  }
+    isAvailable: false,
+  },
 ];
 
 export default function MatchingExplorer() {
-  // Team plan state
   const [requiredSkills, setRequiredSkills] = useState(['React', 'Python', 'Figma', 'Node.js']);
   const [newSkillInput, setNewSkillInput] = useState('');
   const [memberIds, setMemberIds] = useState(['student-1', 'student-2']);
@@ -79,7 +77,6 @@ export default function MatchingExplorer() {
   const [teamInterests, setTeamInterests] = useState(['Fintech']);
   const [teamCapacity, setTeamCapacity] = useState(4);
 
-  // Add required skill
   const handleAddSkill = (e) => {
     e.preventDefault();
     const trimmed = newSkillInput.trim();
@@ -89,58 +86,114 @@ export default function MatchingExplorer() {
     }
   };
 
-  // Remove required skill
   const handleRemoveSkill = (skillToRemove) => {
     setRequiredSkills((prev) => prev.filter((s) => s !== skillToRemove));
   };
 
-  // Toggle member on team
   const handleToggleMember = (id) => {
-    setMemberIds((prev) =>
-      prev.includes(id) ? prev.filter((mId) => mId !== id) : [...prev, id]
-    );
+    setMemberIds((prev) => (prev.includes(id) ? prev.filter((mId) => mId !== id) : [...prev, id]));
   };
 
-  // Construct team object for pure algorithm
   const team = useMemo(() => ({
     requiredSkills,
     members: memberIds,
     availability: teamAvailability,
     interests: teamInterests,
-    capacity: teamCapacity
+    capacity: teamCapacity,
   }), [requiredSkills, memberIds, teamAvailability, teamInterests, teamCapacity]);
 
-  // Recalculate candidate ranking dynamically whenever team or profiles change
   const matchingResult = useMemo(() => {
-    return rankCandidates(team, DEMO_PROFILES);
+    return rankCandidates(team, CANDIDATE_PROFILES);
   }, [team]);
 
   const { coverage, rankedCandidates, excludedCandidates, status, message } = matchingResult;
 
+  const coveragePercent = Math.round(coverage.coverageRatio * 100);
+
   return (
     <div className={styles.explorerContainer}>
+      {/* Header */}
       <header className={styles.introSection}>
-        <p className="eyebrow">Explainable Matching</p>
-        <h1 className={styles.headerTitle}>Match Lab</h1>
-        <p className={styles.headerSubtitle}>
-          Evaluate how candidates complement your team plan. Transparent, deterministic calculations based on missing skills, availability, and project interests.
-        </p>
-        <div className={styles.modelBadge}>
-          <span>Deterministic Algorithm</span> · <span>Zero Machine Learning</span>
+        <div className={styles.introContent}>
+          <p className="eyebrow">Smart Matching</p>
+          <h1 className={styles.headerTitle}>Match Lab</h1>
+          <p className={styles.headerSubtitle}>
+            Evaluate how candidates complement your team plan. Transparent scoring based on missing skill gaps, availability, and track alignment.
+          </p>
         </div>
       </header>
 
-      <div className={styles.workbench}>
-        {/* Left column: Interactive Team Controls */}
-        <aside className={styles.configPanel} aria-label="Team Plan Settings">
+      {/* Top Coverage Dashboard Summary */}
+      <section className={styles.coverageSummaryCard} aria-labelledby="coverage-heading">
+        <div className={styles.coverageTopRow}>
           <div>
-            <h2 className={styles.configSectionHeading}>Team Plan Context</h2>
+            <span className={styles.cardEyebrow}>Team Skill Coverage</span>
+            <h2 id="coverage-heading" className={styles.coverageHeading}>
+              {coverage.totalCovered} of {coverage.totalRequired} Required Skills Covered
+            </h2>
+          </div>
+          <div className={styles.coverageMeterWrap}>
+            <div className={styles.coverageRatioBadge}>
+              <span className={styles.coverageNumber}>{coveragePercent}%</span>
+              <span className={styles.coverageLabel}>Covered</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Progress Bar */}
+        <div className={styles.coverageProgressBarBg} aria-hidden="true">
+          <div
+            className={styles.coverageProgressBarFill}
+            style={{ width: `${coveragePercent}%` }}
+          />
+        </div>
+
+        {/* Covered vs Missing Pills Grid */}
+        <div className={styles.gapsSummaryRow}>
+          <div className={styles.gapCol}>
+            <span className={styles.gapColTitle}>
+              <span className={styles.checkDot}>✓</span> Covered by Current Members ({coverage.coveredSkills.length})
+            </span>
+            <div className={styles.gapPillsList}>
+              {coverage.coveredSkills.length > 0 ? (
+                formatSkillList(coverage.coveredSkills).map((s) => (
+                  <span key={s} className={styles.tagCovered}>✓ {s}</span>
+                ))
+              ) : (
+                <span className={styles.emptyGapNotice}>None covered yet</span>
+              )}
+            </div>
+          </div>
+
+          <div className={styles.gapCol}>
+            <span className={styles.gapColTitle}>
+              <span className={styles.alertDot}>!</span> Unfilled Missing Gaps ({coverage.missingSkills.length})
+            </span>
+            <div className={styles.gapPillsList}>
+              {coverage.missingSkills.length > 0 ? (
+                formatSkillList(coverage.missingSkills).map((s) => (
+                  <span key={s} className={styles.tagMissing}>! {s}</span>
+                ))
+              ) : (
+                <span className={styles.allCoveredNotice}>All required skills covered!</span>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Two Column Workbench */}
+      <div className={styles.workbench}>
+        {/* Left Column: Team Controls */}
+        <aside className={styles.configPanel} aria-label="Team Plan Settings">
+          <div className={styles.panelHead}>
+            <h2 className={styles.configSectionHeading}>Team Parameters</h2>
             <p className={styles.configDescription}>
-              Update required skills or toggle members to watch recommendations recalculate instantly.
+              Adjust required skills, toggle roster members, or change team constraints.
             </p>
           </div>
 
-          {/* Required Skills Management */}
+          {/* Required Skills Manager */}
           <div className={styles.controlGroup}>
             <label htmlFor="new-skill-input" className={styles.controlLabel}>
               Required Skills ({requiredSkills.length})
@@ -152,7 +205,7 @@ export default function MatchingExplorer() {
                 className={styles.textInput}
                 value={newSkillInput}
                 onChange={(e) => setNewSkillInput(e.target.value)}
-                placeholder="e.g. GraphQL, Figma"
+                placeholder="e.g. GraphQL, Figma, Docker"
               />
               <button type="submit" className={styles.addButton}>
                 Add
@@ -176,13 +229,13 @@ export default function MatchingExplorer() {
             </ul>
           </div>
 
-          {/* Current Team Members Toggle */}
+          {/* Team Members Toggle */}
           <div className={styles.controlGroup}>
             <span className={styles.controlLabel}>
-              Team Roster ({memberIds.length} / {teamCapacity} Members)
+              Current Roster ({memberIds.length} / {teamCapacity})
             </span>
             <ul className={styles.memberToggleList} aria-label="Team member selection">
-              {DEMO_PROFILES.slice(0, 4).map((student) => {
+              {CANDIDATE_PROFILES.slice(0, 4).map((student) => {
                 const isSelected = memberIds.includes(student.id);
                 return (
                   <li key={student.id}>
@@ -199,10 +252,10 @@ export default function MatchingExplorer() {
                       />
                       <div className={styles.memberToggleContent}>
                         <span className={styles.memberToggleName}>
-                          {student.name} {isSelected && '(On Team)'}
+                          {student.name} {isSelected && <span className={styles.onTeamBadge}>On Team</span>}
                         </span>
                         <span className={styles.memberToggleSkills}>
-                          Skills: {student.skills.map(formatSkill).join(', ')}
+                          {student.skills.map(formatSkill).join(', ')}
                         </span>
                       </div>
                     </label>
@@ -212,195 +265,134 @@ export default function MatchingExplorer() {
             </ul>
           </div>
 
-          {/* Team Capacity Control */}
+          {/* Constraints Grid */}
+          <div className={styles.constraintsGrid}>
+            <div className={styles.controlGroup}>
+              <label htmlFor="team-capacity-input" className={styles.controlLabel}>
+                Capacity
+              </label>
+              <input
+                id="team-capacity-input"
+                type="number"
+                min="1"
+                max="10"
+                className={styles.textInput}
+                value={teamCapacity}
+                onChange={(e) => setTeamCapacity(Math.max(1, parseInt(e.target.value, 10) || 1))}
+              />
+            </div>
+
+            <div className={styles.controlGroup}>
+              <label htmlFor="team-schedule-select" className={styles.controlLabel}>
+                Schedule
+              </label>
+              <select
+                id="team-schedule-select"
+                className={styles.selectInput}
+                value={teamAvailability[0] || 'weekends'}
+                onChange={(e) => setTeamAvailability([e.target.value])}
+              >
+                <option value="weekends">Weekends only</option>
+                <option value="weekdays">Weekdays</option>
+                <option value="weekday evenings">Weekday evenings</option>
+              </select>
+            </div>
+          </div>
+
           <div className={styles.controlGroup}>
-            <label htmlFor="team-capacity-input" className={styles.controlLabel}>
-              Team Target Capacity
+            <label htmlFor="team-track-select" className={styles.controlLabel}>
+              Track Theme
             </label>
-            <input
-              id="team-capacity-input"
-              type="number"
-              min="1"
-              max="10"
-              className={styles.textInput}
-              value={teamCapacity}
-              onChange={(e) => setTeamCapacity(Math.max(1, parseInt(e.target.value, 10) || 1))}
-            />
-          </div>
-
-          {/* Team Schedule & Track */}
-          <div className={styles.controlGroup}>
-            <label htmlFor="team-schedule-select" className={styles.controlLabel}>Team Schedule Constraint</label>
-            <select
-              id="team-schedule-select"
-              className={styles.textInput}
-              value={teamAvailability[0] || 'weekends'}
-              onChange={(e) => setTeamAvailability([e.target.value])}
-            >
-              <option value="weekends">Weekends only</option>
-              <option value="weekdays">Weekdays</option>
-              <option value="weekday evenings">Weekday evenings</option>
-            </select>
-          </div>
-
-          <div className={styles.controlGroup}>
-            <label htmlFor="team-track-select" className={styles.controlLabel}>Track / Domain Theme</label>
             <select
               id="team-track-select"
-              className={styles.textInput}
+              className={styles.selectInput}
               value={teamInterests[0] || 'Fintech'}
               onChange={(e) => setTeamInterests([e.target.value])}
             >
-              <option value="Fintech">Fintech</option>
-              <option value="AI/ML">AI/ML</option>
-              <option value="Healthcare">Healthcare</option>
-              <option value="Education">Education</option>
+              <option value="Fintech">FinTech</option>
+              <option value="AI/ML">AI / Machine Learning</option>
+              <option value="Healthcare">HealthTech</option>
+              <option value="Education">EdTech</option>
             </select>
           </div>
         </aside>
 
-        {/* Right column: Skill Coverage Ledger & Ranked Recommendations */}
+        {/* Right Column: Ranked Recommendations */}
         <main className={styles.resultsArea} aria-live="polite">
-          {/* Skill Coverage Summary */}
-          <section className={styles.coverageLedger} aria-labelledby="coverage-summary-heading">
-            <div className={styles.ledgerHeader}>
-              <h2 id="coverage-summary-heading" className={styles.ledgerTitle}>
-                Skill Coverage Ledger
+          <div className={styles.resultsHeader}>
+            <div>
+              <h2 className={styles.resultsTitle}>
+                Ranked Recommendations ({rankedCandidates.length})
               </h2>
-              <span className={styles.coverageRatioTag}>
-                {Math.round(coverage.coverageRatio * 100)}% Covered
-              </span>
+              <p className={styles.resultsSubtitle}>
+                Candidates ranked by how effectively they cover missing skills and align with team availability.
+              </p>
             </div>
+          </div>
 
-            <div className={styles.statsGrid}>
-              <div className={styles.statCard}>
-                <div className={styles.statLabel}>Required</div>
-                <div className={styles.statValue}>{coverage.totalRequired}</div>
-              </div>
-              <div className={styles.statCard}>
-                <div className={styles.statLabel}>Covered</div>
-                <div className={styles.statValue}>{coverage.totalCovered}</div>
-              </div>
-              <div className={styles.statCard}>
-                <div className={styles.statLabel}>Missing Gaps</div>
-                <div className={styles.statValue}>{coverage.totalMissing}</div>
-              </div>
+          {status === 'team_full' && (
+            <div className={styles.emptyNotice}>
+              <h3 className={styles.emptyHeading}>Team is at Full Capacity</h3>
+              <p className={styles.emptyText}>
+                {message} Increase team capacity or remove a member to explore new additions.
+              </p>
             </div>
+          )}
 
-            <div className={styles.gapListSection}>
-              <div className={styles.gapCategory}>
-                <strong>Covered Requirements:</strong>
-                {coverage.coveredSkills.length > 0 ? (
-                  <span className={styles.pillsList}>
-                    {formatSkillList(coverage.coveredSkills).map((s) => (
-                      <span key={s} className={`${styles.tag} ${styles.tagContributed}`}>
-                        ✓ {s}
-                      </span>
-                    ))}
-                  </span>
-                ) : (
-                  <span style={{ color: 'var(--muted)', fontSize: '0.8rem' }}>None yet</span>
-                )}
-              </div>
-
-              <div className={styles.gapCategory}>
-                <strong>Unfilled Missing Gaps:</strong>
-                {coverage.missingSkills.length > 0 ? (
-                  <span className={styles.pillsList}>
-                    {formatSkillList(coverage.missingSkills).map((s) => (
-                      <span key={s} className={`${styles.tag} ${styles.tagRedundant}`}>
-                        ! {s}
-                      </span>
-                    ))}
-                  </span>
-                ) : (
-                  <span style={{ color: 'var(--signal)', fontSize: '0.8rem', fontWeight: 700 }}>
-                    All skill requirements covered!
-                  </span>
-                )}
-              </div>
+          {status === 'no_requirements' && (
+            <div className={styles.emptyNotice}>
+              <h3 className={styles.emptyHeading}>No Skills Required Yet</h3>
+              <p className={styles.emptyText}>
+                Add required skills in the team panel to evaluate candidate complement and fill coverage gaps.
+              </p>
             </div>
-          </section>
+          )}
 
-          {/* Candidates List / State Messages */}
-          <section aria-labelledby="candidates-heading">
-            <h2 id="candidates-heading" className={styles.configSectionHeading}>
-              Ranked Candidate Recommendations ({rankedCandidates.length})
-            </h2>
+          {status === 'fully_covered' && (
+            <div className={styles.explanationNoticeBox}>
+              <p>
+                <strong>Notice:</strong> All team skill requirements are covered by existing members. Candidate scores reflect availability and track alignment.
+              </p>
+            </div>
+          )}
 
-            {status === 'team_full' && (
-              <div className={styles.emptyNotice}>
-                <h3 className={styles.emptyHeading}>Team is at Full Capacity</h3>
-                <p className={styles.emptyText}>
-                  {message} Adjust team size or remove a member to explore new additions.
-                </p>
-              </div>
-            )}
+          {rankedCandidates.length > 0 && (
+            <div className={styles.candidateList}>
+              {rankedCandidates.map((candidate, index) => (
+                <CandidateMatchCard
+                  key={candidate.id}
+                  candidate={candidate}
+                  rank={index + 1}
+                  isTopPick={index === 0 && candidate.skillsContributed.length > 0}
+                />
+              ))}
+            </div>
+          )}
 
-            {status === 'no_requirements' && (
-              <div className={styles.emptyNotice}>
-                <h3 className={styles.emptyHeading}>No Skills Required Yet</h3>
-                <p className={styles.emptyText}>
-                  Add required skills in the team panel to calculate missing gaps and evaluate complementary candidates.
-                </p>
-              </div>
-            )}
+          {rankedCandidates.length === 0 && status === 'ok' && (
+            <div className={styles.emptyNotice}>
+              <h3 className={styles.emptyHeading}>No Eligible Candidates</h3>
+              <p className={styles.emptyText}>
+                All available profiles are either already on the team or currently inactive.
+              </p>
+            </div>
+          )}
 
-            {status === 'fully_covered' && (
-              <div style={{ marginBottom: 'var(--s4)' }} className={styles.explanationBox}>
-                <p className={styles.explanationText}>
-                  <strong>Notice:</strong> All team skill requirements are satisfied by current members. Candidate scores reflect availability and domain alignment without inflating skill recruitment scores.
-                </p>
-              </div>
-            )}
-
-            {rankedCandidates.length > 0 && (
-              <div className={styles.candidateList}>
-                {rankedCandidates.map((candidate, index) => (
-                  <CandidateMatchCard
-                    key={candidate.id}
-                    candidate={candidate}
-                    rank={index + 1}
-                    isTopPick={index === 0 && candidate.skillsContributed.length > 0}
-                  />
-                ))}
-              </div>
-            )}
-
-            {rankedCandidates.length === 0 && status === 'ok' && (
-              <div className={styles.emptyNotice}>
-                <h3 className={styles.emptyHeading}>No Eligible Candidates</h3>
-                <p className={styles.emptyText}>
-                  All available profiles are either already on the team or currently inactive.
-                </p>
-              </div>
-            )}
-          </section>
-
-          {/* Excluded Candidates Transparency */}
+          {/* Excluded Candidates transparency */}
           {excludedCandidates.length > 0 && (
-            <aside aria-label="Excluded candidate log" style={{ borderTop: 'var(--line)', paddingTop: 'var(--s4)' }}>
-              <p className={styles.controlLabel}>Excluded Profiles ({excludedCandidates.length})</p>
-              <ul style={{ listStyle: 'none', padding: 0, margin: '8px 0 0', display: 'grid', gap: '6px' }}>
+            <div className={styles.excludedCard}>
+              <span className={styles.controlLabel}>Excluded Profiles ({excludedCandidates.length})</span>
+              <ul className={styles.excludedList}>
                 {excludedCandidates.map((ex) => (
-                  <li key={ex.id} style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>
-                    <strong>{ex.name}</strong> ({ex.id}): {ex.reason}
+                  <li key={ex.id}>
+                    <strong>{ex.name}</strong>: {ex.reason}
                   </li>
                 ))}
               </ul>
-            </aside>
+            </div>
           )}
-
-          {/* Explainable Methodology Note */}
-          <footer className={styles.methodologySection}>
-            <h3 className={styles.methodologyHeading}>How This Score is Calculated</h3>
-            <p className={styles.methodologyText}>
-              Recommendations use a deterministic 3-factor weighted model: <strong>60% Missing-Skill Fit</strong> (proportion of missing gaps covered), <strong>25% Schedule Compatibility</strong> (overlap with requested team hours), and <strong>15% Domain Interests</strong> (shared track preferences). Ties are deterministically resolved by missing-skill count, then schedule fit, then interest fit, and finally unique ID. No machine learning or opaque black-box scoring is used.
-            </p>
-          </footer>
         </main>
       </div>
     </div>
   );
 }
-

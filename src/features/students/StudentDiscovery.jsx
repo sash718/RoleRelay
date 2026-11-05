@@ -177,12 +177,12 @@ export default function StudentDiscovery() {
     const newDemoProfiles = DEMO_PROFILES.filter((demo) => !existingIds.has(demo.id));
 
     if (newDemoProfiles.length === 0) {
-      showTemporaryFeedback('success', 'Demonstration profiles are already in your directory.');
+      showTemporaryFeedback('success', 'Sample profiles are already in your directory.');
       return;
     }
 
     const nextProfiles = [...profiles, ...newDemoProfiles];
-    persistProfiles(nextProfiles, `Loaded ${newDemoProfiles.length} demonstration candidate profiles.`);
+    persistProfiles(nextProfiles, `Loaded ${newDemoProfiles.length} sample candidate profiles.`);
   };
 
   // Explicit storage recovery (per AGENTS.md rule: user must explicitly choose recovery)
@@ -215,192 +215,106 @@ export default function StudentDiscovery() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <p className={styles.eyebrow}>Candidate Discovery</p>
-        <h1 className={styles.title}>Explore possible contributors</h1>
+        <p className={styles.eyebrow}>Candidate Directory</p>
+        <h1 className={styles.title}>Find your teammates.</h1>
         <p className={styles.description}>
-          Discover potential teammates by skill sets, availability, and interests. Saved candidates provide stable IDs for the Match Lab and Recruitment Board.
+          Browse candidate profiles by skills, availability, and interests. Add contributors to your local directory and feed them into the Match Lab.
         </p>
-
-        <div className={styles.disclaimerBanner} role="note">
-          <span>
-            <strong>Browser-Local Directory:</strong> Candidate profiles are created and stored inside this browser&apos;s localStorage. They are not cloud-registered accounts, globally discoverable users, or verified real-time university students.
-          </span>
-        </div>
       </header>
 
       {storageError && (
         <div className={styles.storageAlert} role="alert">
           <div>
-            <strong>Storage Issue: </strong>
+            <strong>Storage issue: </strong>
             <span>{storageError} Existing data has not been modified.</span>
           </div>
-          <button
-            type="button"
-            className={styles.dangerButton}
-            onClick={handleResetCorruptStorage}
-          >
-            Reset Damaged Storage
+          <button type="button" className={styles.dangerButton} onClick={handleResetCorruptStorage}>
+            Reset storage
           </button>
         </div>
       )}
 
       {feedback && (
         <div
-          className={`${styles.feedbackBanner} ${
-            feedback.type === 'success' ? styles.feedbackSuccess : styles.feedbackError
-          }`}
+          className={`${styles.feedbackBanner} ${feedback.type === 'success' ? styles.feedbackSuccess : styles.feedbackError}`}
           role="status"
         >
           {feedback.message}
         </div>
       )}
 
-      {/* Action Toolbar */}
       <div className={styles.toolbar}>
         <div className={styles.directoryStats}>
-          Showing <strong>{filteredProfiles.length}</strong> of <strong>{profiles.length}</strong> local candidate{profiles.length === 1 ? '' : 's'}
+          Showing <strong>{filteredProfiles.length}</strong> of <strong>{profiles.length}</strong> candidate{profiles.length === 1 ? '' : 's'}
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>
           {profiles.length === 0 && (
-            <button
-              type="button"
-              className={styles.secondaryBtn}
-              onClick={handleLoadDemoProfiles}
-              title="Add 3 curated sample profiles labeled honestly as demo data"
-            >
-              Load Demo Candidates
+            <button type="button" className={styles.secondaryBtn} onClick={handleLoadDemoProfiles}>
+              Load sample profiles
             </button>
           )}
-          <button
-            type="button"
-            className={styles.primaryButton}
-            onClick={() => {
-              setEditingProfile(null);
-              setIsFormOpen(true);
-            }}
-          >
-            + Add Candidate Profile
+          <button type="button" className={styles.primaryButton} onClick={() => { setEditingProfile(null); setIsFormOpen(true); }}>
+            + Add candidate
           </button>
         </div>
       </div>
 
-      {/* Filter and Search Controls */}
-      <section className={styles.controlsPanel} aria-label="Candidate search and filter controls">
+      <section className={styles.controlsPanel} aria-label="Candidate search and filter">
         <div className={styles.searchRow}>
           <div className={styles.searchInputWrapper}>
             <input
               type="search"
               className={styles.searchInput}
-              placeholder="Search candidate by name or skill (e.g. Alex, React, Python)..."
+              placeholder="Search by name or skill…"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               aria-label="Search candidate by name or skill"
             />
             {searchQuery && (
-              <button
-                type="button"
-                className={styles.clearSearchBtn}
-                onClick={() => setSearchQuery('')}
-                aria-label="Clear search input"
-              >
-                ✕
-              </button>
+              <button type="button" className={styles.clearSearchBtn} onClick={() => setSearchQuery('')} aria-label="Clear search">✕</button>
             )}
           </div>
         </div>
-
         <div className={styles.filtersRow}>
           <div className={styles.filterGroup}>
-            <label htmlFor="filter-skill" className={styles.filterLabel}>
-              Skill:
-            </label>
-            <select
-              id="filter-skill"
-              className={styles.selectInput}
-              value={selectedSkill}
-              onChange={(e) => setSelectedSkill(e.target.value)}
-            >
-              <option value="all">All Skills ({availableSkills.length})</option>
-              {availableSkills.map((skill) => (
-                <option key={skill} value={skill}>
-                  {skill}
-                </option>
-              ))}
+            <label htmlFor="filter-skill" className={styles.filterLabel}>Skill</label>
+            <select id="filter-skill" className={styles.selectInput} value={selectedSkill} onChange={(e) => setSelectedSkill(e.target.value)}>
+              <option value="all">All skills</option>
+              {availableSkills.map((skill) => <option key={skill} value={skill}>{skill}</option>)}
             </select>
           </div>
-
           <div className={styles.filterGroup}>
-            <label htmlFor="filter-interest" className={styles.filterLabel}>
-              Interest:
-            </label>
-            <select
-              id="filter-interest"
-              className={styles.selectInput}
-              value={selectedInterest}
-              onChange={(e) => setSelectedInterest(e.target.value)}
-            >
-              <option value="all">All Interests ({availableInterests.length})</option>
-              {availableInterests.map((interest) => (
-                <option key={interest} value={interest}>
-                  {interest}
-                </option>
-              ))}
+            <label htmlFor="filter-interest" className={styles.filterLabel}>Interest</label>
+            <select id="filter-interest" className={styles.selectInput} value={selectedInterest} onChange={(e) => setSelectedInterest(e.target.value)}>
+              <option value="all">All interests</option>
+              {availableInterests.map((interest) => <option key={interest} value={interest}>{interest}</option>)}
             </select>
           </div>
-
           <div className={styles.filterGroup}>
-            <label htmlFor="filter-availability" className={styles.filterLabel}>
-              Availability:
-            </label>
-            <select
-              id="filter-availability"
-              className={styles.selectInput}
-              value={selectedAvailability}
-              onChange={(e) => setSelectedAvailability(e.target.value)}
-            >
-              <option value="all">All Availabilities</option>
-              {VALID_AVAILABILITIES.map((avail) => (
-                <option key={avail} value={avail}>
-                  {AVAILABILITY_LABELS[avail]}
-                </option>
-              ))}
+            <label htmlFor="filter-availability" className={styles.filterLabel}>Availability</label>
+            <select id="filter-availability" className={styles.selectInput} value={selectedAvailability} onChange={(e) => setSelectedAvailability(e.target.value)}>
+              <option value="all">All</option>
+              {VALID_AVAILABILITIES.map((avail) => <option key={avail} value={avail}>{AVAILABILITY_LABELS[avail]}</option>)}
             </select>
           </div>
-
           <label className={styles.checkboxLabel}>
-            <input
-              type="checkbox"
-              className={styles.checkboxInput}
-              checked={openToTeamOnly}
-              onChange={(e) => setOpenToTeamOnly(e.target.checked)}
-            />
-            Open to Team Only
+            <input type="checkbox" className={styles.checkboxInput} checked={openToTeamOnly} onChange={(e) => setOpenToTeamOnly(e.target.checked)} />
+            Open to team
           </label>
-
           {hasActiveFilters && (
-            <button
-              type="button"
-              className={styles.resetButton}
-              onClick={handleResetFilters}
-            >
-              Reset Filters
-            </button>
+            <button type="button" className={styles.resetButton} onClick={handleResetFilters}>Clear filters</button>
           )}
         </div>
       </section>
 
-      {/* Directory Grid */}
       {filteredProfiles.length > 0 ? (
-        <section className={styles.cardsGrid} aria-label="Student candidate directory">
+        <section className={styles.cardsGrid} aria-label="Candidate directory">
           {filteredProfiles.map((profile) => (
             <StudentCard
               key={profile.id}
               profile={profile}
               onView={(p) => setViewingProfile(p)}
-              onEdit={(p) => {
-                setEditingProfile(p);
-                setIsFormOpen(true);
-              }}
+              onEdit={(p) => { setEditingProfile(p); setIsFormOpen(true); }}
               onRemove={handleRemoveProfile}
             />
           ))}
@@ -409,71 +323,37 @@ export default function StudentDiscovery() {
         <section className={styles.emptyState}>
           {profiles.length === 0 ? (
             <>
-              <h2 className={styles.emptyStateTitle}>Local directory is empty</h2>
+              <h2 className={styles.emptyStateTitle}>Your directory is empty</h2>
               <p className={styles.emptyStateText}>
-                No candidate profiles have been added yet in this browser. Add your first candidate profile or load demonstration profiles to start discovering teammates.
+                Add candidate profiles to start discovering potential teammates. You can also load sample profiles to explore the layout.
               </p>
-              <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-                <button
-                  type="button"
-                  className={styles.secondaryBtn}
-                  onClick={handleLoadDemoProfiles}
-                >
-                  Load Demo Candidates
-                </button>
-                <button
-                  type="button"
-                  className={styles.primaryButton}
-                  onClick={() => {
-                    setEditingProfile(null);
-                    setIsFormOpen(true);
-                  }}
-                >
-                  + Add First Candidate
-                </button>
+              <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                <button type="button" className={styles.secondaryBtn} onClick={handleLoadDemoProfiles}>Load sample profiles</button>
+                <button type="button" className={styles.primaryButton} onClick={() => { setEditingProfile(null); setIsFormOpen(true); }}>+ Add first candidate</button>
               </div>
             </>
           ) : (
             <>
-              <h2 className={styles.emptyStateTitle}>No matching candidates</h2>
-              <p className={styles.emptyStateText}>
-                No student profiles matched your current search and filter criteria. Try adjusting or resetting your filters.
-              </p>
-              <button
-                type="button"
-                className={styles.secondaryBtn}
-                style={{ marginTop: '10px' }}
-                onClick={handleResetFilters}
-              >
-                Clear all filters
-              </button>
+              <h2 className={styles.emptyStateTitle}>No candidates match</h2>
+              <p className={styles.emptyStateText}>Try adjusting or clearing your search and filter criteria.</p>
+              <button type="button" className={styles.secondaryBtn} style={{ marginTop: '12px' }} onClick={handleResetFilters}>Clear all filters</button>
             </>
           )}
         </section>
       )}
 
-      {/* Create / Edit Form Modal */}
       {isFormOpen && (
         <StudentProfileForm
           initialData={editingProfile}
           onSave={handleSaveProfile}
-          onCancel={() => {
-            setIsFormOpen(false);
-            setEditingProfile(null);
-          }}
+          onCancel={() => { setIsFormOpen(false); setEditingProfile(null); }}
         />
       )}
-
-      {/* Detail Modal */}
       {viewingProfile && (
         <StudentDetailModal
           profile={viewingProfile}
           onClose={() => setViewingProfile(null)}
-          onEdit={(p) => {
-            setViewingProfile(null);
-            setEditingProfile(p);
-            setIsFormOpen(true);
-          }}
+          onEdit={(p) => { setViewingProfile(null); setEditingProfile(p); setIsFormOpen(true); }}
         />
       )}
     </div>

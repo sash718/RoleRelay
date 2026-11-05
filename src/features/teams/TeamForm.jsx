@@ -59,13 +59,12 @@ export default function TeamForm({
   return (
     <div className={styles.formSection}>
       <div className={styles.sectionHeading}>
-        <h2>Team parameters</h2>
-        <p>Define the project identity, target challenge, and required technical skills.</p>
+        <h2>Team Specifications</h2>
       </div>
 
       <div className={styles.fieldGroup}>
         <label htmlFor="team-name" className={styles.fieldLabel}>
-          Team name <span className={styles.requiredAsterisk}>*</span>
+          Team Name <span className={styles.requiredAsterisk}>*</span>
         </label>
         <input
           id="team-name"
@@ -86,7 +85,7 @@ export default function TeamForm({
 
       <div className={styles.fieldGroup}>
         <label htmlFor="team-opportunity" className={styles.fieldLabel}>
-          Target opportunity (Hackathon)
+          Target Challenge
         </label>
         <select
           id="team-opportunity"
@@ -94,33 +93,29 @@ export default function TeamForm({
           value={team.opportunityId ?? ''}
           onChange={handleOpportunityChange}
         >
-          <option value="">Independent team (No hackathon selected)</option>
+          <option value="">No challenge selected (Open team)</option>
           {opportunities.map((opp) => (
             <option key={opp.id} value={opp.id}>
-              {opp.title} — {opp.organizer} ({opp.mode})
+              {opp.title} ({opp.category} &middot; {opp.mode})
             </option>
           ))}
         </select>
         {catalogStatus === 'loading' && (
-          <span className={styles.helpText}>Loading available opportunities from catalog...</span>
+          <span className={styles.helpText}>Loading challenges...</span>
         )}
         {selectedOpportunity && (
           <div className={styles.selectedOppSummary}>
             <span className={styles.oppCategory}>{selectedOpportunity.category}</span>
-            <span className={styles.oppMode}>{selectedOpportunity.mode}</span>
-            <p>{selectedOpportunity.description}</p>
+            <span className={styles.oppMode}>
+              {selectedOpportunity.mode === 'offline' ? 'In Person' : selectedOpportunity.mode === 'online' ? 'Online' : 'Hybrid'}
+            </span>
           </div>
-        )}
-        {!team.opportunityId && (
-          <span className={styles.helpText}>
-            Independent creation allowed: You can build a roster without an assigned event.
-          </span>
         )}
       </div>
 
       <div className={styles.fieldGroup}>
         <label htmlFor="team-capacity" className={styles.fieldLabel}>
-          Maximum team capacity <span className={styles.requiredAsterisk}>*</span>
+          Target Capacity <span className={styles.requiredAsterisk}>*</span>
         </label>
         <div className={styles.capacityInputRow}>
           <input
@@ -135,7 +130,7 @@ export default function TeamForm({
             aria-describedby={fieldErrors.maxMembers ? 'team-capacity-error' : undefined}
           />
           <span className={styles.capacityHint}>
-            Current roster: {team.memberIds.length} {team.memberIds.length === 1 ? 'member' : 'members'}
+            ({team.memberIds.length} currently assigned)
           </span>
         </div>
         {fieldErrors.maxMembers && (
@@ -147,18 +142,15 @@ export default function TeamForm({
 
       <div className={styles.fieldGroup}>
         <label htmlFor="skill-input" className={styles.fieldLabel}>
-          Required skills ({team.requiredSkills.length})
+          Required Skills ({team.requiredSkills.length})
         </label>
-        <p className={styles.fieldDescription}>
-          Skills needed for this project. Downstream Explainable Matching uses these to identify coverage gaps.
-        </p>
 
         <form onSubmit={handleAddSkill} className={styles.skillInputRow}>
           <input
             id="skill-input"
             type="text"
             className={`${styles.textInput} ${skillError ? styles.inputError : ''}`}
-            placeholder="e.g. React, Python, Figma, Docker"
+            placeholder="Add a required skill (e.g. React, Python, Docker)..."
             value={skillInput}
             onChange={(e) => {
               setSkillInput(e.target.value);
@@ -166,7 +158,7 @@ export default function TeamForm({
             }}
           />
           <button type="submit" className={styles.secondaryButton}>
-            Add skill
+            Add
           </button>
         </form>
 
@@ -178,7 +170,7 @@ export default function TeamForm({
 
         <div className={styles.skillPillsContainer}>
           {team.requiredSkills.length === 0 ? (
-            <p className={styles.emptyNotice}>No skills required yet. Add skills to define what your team needs.</p>
+            <p className={styles.emptyNotice}>No required skills added yet.</p>
           ) : (
             <ul className={styles.skillList} aria-label="Required skills list">
               {team.requiredSkills.map((skill) => (
@@ -201,4 +193,3 @@ export default function TeamForm({
     </div>
   );
 }
-

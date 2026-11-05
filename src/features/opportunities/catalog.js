@@ -61,13 +61,52 @@ export function validateOpportunityCatalog(catalog) {
   return catalog.events;
 }
 
+let catalogCache = null;
+
+export function clearOpportunityCatalogCache() {
+  catalogCache = null;
+}
+
 export async function loadOpportunityCatalog(fetcher = fetch) {
+  // If running in browser with default fetch and already loaded, return cached catalog
+  if (fetcher === fetch && catalogCache && catalogCache.length > 0) {
+    return catalogCache;
+  }
+
   let response;
 
-  try {
-    response = await fetcher('/events.json');
-  } catch {
-    throw new Error('The opportunity catalog is unavailable.');
+  if (fetcher !== fetch) {
+    // Custom test mock fetcher
+    try {
+      response = await fetcher('/events.json');
+    } catch (err) {
+      throw new Error('The opportunity catalog is unavailable.', { cause: err });
+    }
+  } else {
+    // In-browser environment: attempt multiple valid path resolutions
+    const urlsToTry = [
+      '/events.json',
+      'events.json',
+      './events.json',
+      ...(typeof window !== 'undefined' && window.location ? [`${window.location.origin}/events.json`] : []),
+    ];
+
+    let lastError = null;
+    for (const url of urlsToTry) {
+      try {
+        const res = await fetcher(url);
+        if (res && res.ok) {
+          response = res;
+          break;
+        }
+      } catch (err) {
+        lastError = err;
+      }
+    }
+
+    if (!response || !response.ok) {
+      throw new Error('The opportunity catalog is unavailable.', { cause: lastError });
+    }
   }
 
   if (!response.ok) {
@@ -76,7 +115,11 @@ export async function loadOpportunityCatalog(fetcher = fetch) {
 
   try {
     const catalog = await response.json();
-    return validateOpportunityCatalog(catalog);
+    const validatedEvents = validateOpportunityCatalog(catalog);
+    if (fetcher === fetch) {
+      catalogCache = validatedEvents;
+    }
+    return validatedEvents;
   } catch (error) {
     if (error.message === 'The opportunity catalog has an unsupported structure.') {
       throw error;

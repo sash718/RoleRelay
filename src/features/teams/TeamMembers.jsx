@@ -48,8 +48,7 @@ export default function TeamMembers({
   return (
     <div className={styles.membersSection}>
       <div className={styles.sectionHeading}>
-        <h2>Team membership & capacity</h2>
-        <p>Assign local student profiles to the team and track available roster capacity.</p>
+        <h2>Team Roster</h2>
       </div>
 
       {/* Capacity Indicator Meter */}
@@ -76,14 +75,14 @@ export default function TeamMembers({
       {/* Add Member Form */}
       <div className={styles.addMemberBlock}>
         <label htmlFor="member-select" className={styles.fieldLabel}>
-          Add team member from local profiles
+          Add team member
         </label>
         {isFull ? (
           <p className={styles.warningNote}>
             Team has reached maximum capacity ({team.maxMembers} members). Increase maximum capacity above to add more members.
           </p>
         ) : availableCandidates.length === 0 ? (
-          <p className={styles.emptyNotice}>All available demonstration profiles have been added to this team.</p>
+          <p className={styles.emptyNotice}>All candidate profiles have been added to this team.</p>
         ) : (
           <form onSubmit={handleAddMember} className={styles.addMemberForm}>
             <select
@@ -96,7 +95,7 @@ export default function TeamMembers({
               }}
               disabled={isFull}
             >
-              <option value="">Choose a student profile...</option>
+              <option value="">Choose a candidate profile...</option>
               {availableCandidates.map((cand) => (
                 <option key={cand.id} value={cand.id}>
                   {cand.name} — {cand.role} ({cand.skills.slice(0, 3).join(', ')})

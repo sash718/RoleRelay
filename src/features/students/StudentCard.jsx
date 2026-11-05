@@ -10,7 +10,7 @@ export default function StudentCard({ profile, onView, onEdit, onRemove }) {
         <div className={styles.cardHeader}>
           <div>
             <h3 id={`card-title-${id}`} className={styles.cardName}>{name}</h3>
-            <span className={styles.candidateIdBadge} title="Candidate ID for Matching and Recruitment">
+            <span className={styles.candidateIdBadge} title="Candidate ID">
               ID: {id}
             </span>
           </div>

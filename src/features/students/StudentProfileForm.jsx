@@ -104,9 +104,9 @@ export default function StudentProfileForm({ initialData = null, onSave, onCance
       >
         <header className={styles.modalHeader}>
           <div>
-            <span className={styles.eyebrow}>{isEditing ? 'Update Directory' : 'Local Directory'}</span>
+            <span className={styles.eyebrow}>{isEditing ? 'Update Profile' : 'New Candidate'}</span>
             <h2 id="form-dialog-title" className={styles.modalTitle}>
-              {isEditing ? 'Edit Candidate Profile' : 'Add Student Candidate'}
+              {isEditing ? 'Edit Candidate Profile' : 'Add Candidate Profile'}
             </h2>
           </div>
           <button
@@ -223,11 +223,7 @@ export default function StudentProfileForm({ initialData = null, onSave, onCance
               </span>
             </div>
 
-            <div className={styles.disclaimerBanner} style={{ marginTop: '4px' }}>
-              <span>
-                <strong>Note:</strong> Profiles are saved to this browser&apos;s localStorage for team matching and recruitment planning.
-              </span>
-            </div>
+
           </div>
 
           <footer className={styles.modalFooter}>

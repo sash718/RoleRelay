@@ -64,7 +64,7 @@ export default function StudentDetailModal({ profile, onClose, onEdit }) {
 
         <div className={styles.modalBody}>
           <div className={styles.detailRow}>
-            <span className={styles.detailLabel}>Candidate ID (for Matching & Recruitment)</span>
+            <span className={styles.detailLabel}>Candidate ID</span>
             <div className={styles.idBox}>
               <span>{profile.id}</span>
               <button
@@ -118,11 +118,7 @@ export default function StudentDetailModal({ profile, onClose, onEdit }) {
             </div>
           )}
 
-          <div className={styles.disclaimerBanner} style={{ marginTop: '8px' }}>
-            <span>
-              <strong>Local Browser Record:</strong> This candidate profile was created in this browser session. It can be consumed by Explainable Matching and the Recruitment Board.
-            </span>
-          </div>
+
         </div>
 
         <footer className={styles.modalFooter}>

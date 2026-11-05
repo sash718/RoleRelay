@@ -20,7 +20,6 @@ export default function TeamCreation() {
   const [team, setTeam] = useState(() => {
     const stored = readStoredData(TEAM_STORAGE_KEY, validateTeam);
     if (stored.status === 'success') {
-      // If user navigated with a specific opportunity query and saved team has none, attach it
       if (opportunityQuery && !stored.data.opportunityId) {
         return { ...stored.data, opportunityId: opportunityQuery };
       }
@@ -29,33 +28,15 @@ export default function TeamCreation() {
     return createBlankTeam(opportunityQuery);
   });
 
-  const [storageStatus, setStorageStatus] = useState(() => {
-    const stored = readStoredData(TEAM_STORAGE_KEY, validateTeam);
-    if (stored.status === 'success') {
-      return {
-        type: 'info',
-        message: `Restored saved team plan "${stored.data.name || 'Untitled'}" from local browser storage.`,
-      };
-    }
-    if (stored.status === 'error') {
-      return {
-        type: 'error',
-        message: stored.message || 'Saved team data is damaged or corrupted. Unreadable data has been preserved without changes.',
-      };
-    }
-    return {
-      type: 'idle',
-      message: opportunityQuery
-        ? 'Starting a new team plan for the selected opportunity.'
-        : 'No saved team plan found. Create an independent team or link to a hackathon below.',
-    };
+  const [storageStatus, setStorageStatus] = useState({
+    type: 'idle',
+    message: '',
   });
 
   const [opportunities, setOpportunities] = useState([]);
   const [catalogStatus, setCatalogStatus] = useState('loading');
   const [fieldErrors, setFieldErrors] = useState({});
 
-  // Fetch available opportunities catalog from static JSON
   useEffect(() => {
     let isMounted = true;
     async function fetchOpportunities() {
@@ -77,7 +58,6 @@ export default function TeamCreation() {
     };
   }, []);
 
-  // Handle saving to localStorage
   const handleSaveTeam = () => {
     const validation = validateTeamForm(team);
     if (!validation.isValid) {
@@ -95,24 +75,23 @@ export default function TeamCreation() {
     if (saveResult.status === 'success') {
       setStorageStatus({
         type: 'success',
-        message: `Team "${team.name}" saved successfully to browser storage.`,
+        message: `Team "${team.name}" saved successfully.`,
       });
     } else {
       setStorageStatus({
         type: 'error',
-        message: saveResult.message || 'Failed to save team plan to browser storage.',
+        message: saveResult.message || 'Failed to save team plan.',
       });
     }
   };
 
-  // Handle resetting team plan
   const handleResetTeam = () => {
     if (window.confirm('Reset team plan? Any unsaved edits will be discarded.')) {
       setTeam(createBlankTeam(opportunityQuery));
       setFieldErrors({});
       setStorageStatus({
         type: 'info',
-        message: 'Team plan reset to blank state. (Previous saved storage unchanged until you click Save).',
+        message: 'Team plan reset to blank state.',
       });
     }
   };
@@ -121,25 +100,20 @@ export default function TeamCreation() {
 
   return (
     <div className={styles.container} aria-labelledby="team-creation-title">
-      {/* Editorial Header */}
+      {/* Clean, Spacious Header */}
       <header className={styles.header}>
         <div className={styles.headerContent}>
-          <p className="eyebrow">Team Formation & Planning</p>
-          <h1 id="team-creation-title">Plan the right team.</h1>
+          <p className="eyebrow">Team Builder</p>
+          <h1 id="team-creation-title">Team Parameters</h1>
           <p className={styles.headerSubtitle}>
-            Define your project vision, target hackathon, required skills, and roster capacity.
-            Changes remain browser-local and feed directly into Explainable Matching.
+            Configure target challenge, technical skills, and roster capacity.
           </p>
-        </div>
-        <div className={styles.headerMetaCard}>
-          <span className={styles.metaLabel}>Planning Mode</span>
-          <strong className={styles.metaValue}>
-            {team.opportunityId ? 'Challenge Targeted' : 'Independent Builder'}
-          </strong>
-          {selectedOpp ? (
-            <span className={styles.metaOppName}>Linked: {selectedOpp.title}</span>
-          ) : (
-            <span className={styles.metaOppName}>No opportunity assigned</span>
+          {selectedOpp && (
+            <div className={styles.linkedChallengePill}>
+              <span>Target Challenge:</span>
+              <strong>{selectedOpp.title}</strong>
+              <small>({selectedOpp.category} &middot; {selectedOpp.mode})</small>
+            </div>
           )}
         </div>
       </header>
@@ -170,7 +144,6 @@ export default function TeamCreation() {
             team={team}
             onChange={(updated) => {
               setTeam(updated);
-              // Clear field-level error when edited
               if (fieldErrors.name && updated.name?.trim()) {
                 setFieldErrors((prev) => ({ ...prev, name: undefined }));
               }
@@ -190,7 +163,6 @@ export default function TeamCreation() {
             team={team}
             onChange={(updated) => {
               setTeam(updated);
-              // Re-check capacity errors if members change
               if (fieldErrors.maxMembers && updated.maxMembers >= updated.memberIds.length) {
                 setFieldErrors((prev) => ({ ...prev, maxMembers: undefined }));
               }
@@ -199,12 +171,12 @@ export default function TeamCreation() {
         </section>
       </div>
 
-      {/* Sticky Bottom Actions Bar */}
+      {/* Bottom Actions Bar */}
       <footer className={styles.actionsBar} aria-label="Team Actions">
         <div className={styles.actionsInfo}>
           <strong>{team.name ? team.name : 'Untitled Team Plan'}</strong>
           <span>
-            {team.memberIds.length} of {team.maxMembers} members · {team.requiredSkills.length} required skills
+            {team.memberIds.length} of {team.maxMembers} members &middot; {team.requiredSkills.length} required skills
           </span>
         </div>
         <div className={styles.actionsButtons}>
@@ -213,14 +185,14 @@ export default function TeamCreation() {
             onClick={handleResetTeam}
             className={styles.resetButton}
           >
-            Reset to blank
+            Reset
           </button>
           <button
             type="button"
             onClick={handleSaveTeam}
             className={styles.primaryButton}
           >
-            Save team plan
+            Save Team Plan
           </button>
           <Link to="/matching" className={styles.navLinkButton}>
             Go to Match Lab →

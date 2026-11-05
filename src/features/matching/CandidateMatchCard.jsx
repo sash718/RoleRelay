@@ -47,7 +47,7 @@ export default function CandidateMatchCard({ candidate, rank, isTopPick }) {
             <span className={styles.scoreValue}>{overallScore}</span>
             <span className={styles.scoreMax}>/ 100</span>
           </div>
-          <span className={styles.scoreLabel}>Deterministic Match</span>
+          <span className={styles.scoreLabel}>Match Score</span>
         </div>
       </div>
 
@@ -141,7 +141,7 @@ export default function CandidateMatchCard({ candidate, rank, isTopPick }) {
           aria-expanded={showBreakdown}
           aria-controls={`breakdown-${candidate.id}`}
         >
-          {showBreakdown ? 'Hide mathematical breakdown' : 'View mathematical score breakdown'}
+          {showBreakdown ? 'Hide score breakdown' : 'View score breakdown'}
         </button>
 
         {showBreakdown && (

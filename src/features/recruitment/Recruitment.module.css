@@ -1,0 +1,680 @@
+﻿/* Recruitment & Team Formation Module CSS */
+
+.workspaceContainer {
+  display: grid;
+  gap: var(--s6);
+}
+
+.introSection {
+  padding-bottom: var(--s5);
+  border-bottom: var(--line);
+}
+
+.headerTitle {
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  letter-spacing: -0.06em;
+  line-height: 1.05;
+  margin: var(--s1) 0 var(--s3);
+}
+
+.headerSubtitle {
+  color: var(--muted);
+  max-width: 720px;
+  font-size: 0.96rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Honesty Banner / Local Notice */
+.localNoticeBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding: 12px var(--s4);
+  background: #f1f7f3;
+  border: 1px solid #c7e5d2;
+  border-left: 4px solid var(--signal);
+  font-size: 0.82rem;
+  color: #174d34;
+}
+
+.localNoticeBanner strong {
+  color: #0f3925;
+}
+
+.feedbackBanner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px var(--s4);
+  background: var(--mint);
+  border: 1px solid #a3dcbb;
+  color: #0f5435;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.errorBanner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px var(--s4);
+  background: #fdf2f2;
+  border: 1px solid #f8b4b4;
+  color: var(--error);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.dismissButton {
+  background: none;
+  border: none;
+  color: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+/* Team Plan & Capacity Section */
+.teamSummaryCard {
+  background: var(--surface);
+  border: var(--line);
+  box-shadow: var(--shadow);
+  padding: var(--s6);
+}
+
+.teamTopRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--s4);
+  padding-bottom: var(--s5);
+  border-bottom: var(--line);
+}
+
+.teamTitleGroup h2 {
+  font-size: 1.6rem;
+  letter-spacing: -0.04em;
+  margin: 0 0 4px;
+}
+
+.opportunityBadge {
+  color: var(--muted);
+  font-size: 0.82rem;
+  display: block;
+}
+
+/* Capacity Tracker */
+.capacityBlock {
+  display: grid;
+  gap: 6px;
+  min-width: 200px;
+}
+
+.capacityMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.capacityValue {
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.progressBarBg {
+  width: 100%;
+  height: 9px;
+  background: #e5ece6;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: var(--signal);
+  transition: width var(--transition);
+}
+
+.progressBarFillFull {
+  background: var(--warning);
+}
+
+/* Skill Ledger */
+.ledgerGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--s5);
+  margin-top: var(--s5);
+  padding-top: var(--s5);
+  border-top: var(--line);
+}
+
+.ledgerCol {
+  display: grid;
+  gap: var(--s2);
+}
+
+.ledgerLabel {
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.pillsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.tagNeutral {
+  background: #eef2ed;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.tagContributed {
+  background: var(--mint);
+  color: #115e3b;
+  border: 1px solid #b2e4c4;
+}
+
+.tagMissing {
+  background: #fff3e0;
+  color: #9c4d00;
+  border: 1px solid #f6cca0;
+}
+
+.tagExtra {
+  background: #f0f4f8;
+  color: #3b5066;
+  border: 1px solid #d3dfea;
+}
+
+/* Team Roster Area */
+.rosterSection {
+  margin-top: var(--s6);
+  padding-top: var(--s5);
+  border-top: var(--line);
+}
+
+.rosterHeading {
+  font-size: 1.1rem;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--s3);
+}
+
+.rosterGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--s4);
+}
+
+.memberCard {
+  background: #fbfcf9;
+  border: var(--line);
+  padding: var(--s4);
+  display: grid;
+  gap: 8px;
+}
+
+.memberCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.memberName {
+  font-size: 0.95rem;
+  font-weight: 760;
+  margin: 0;
+}
+
+.memberRole {
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.removeMemberBtn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.72rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  text-decoration: underline;
+}
+
+.removeMemberBtn:hover {
+  color: var(--error);
+}
+
+/* Comparison Section */
+.comparisonSection {
+  background: #ffffff;
+  border: 2px solid var(--forest);
+  box-shadow: var(--shadow);
+  padding: var(--s6);
+  margin-top: var(--s4);
+}
+
+.comparisonHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--s3);
+  padding-bottom: var(--s4);
+  border-bottom: var(--line);
+}
+
+.comparisonTitle {
+  font-size: 1.45rem;
+  letter-spacing: -0.04em;
+  margin: 2px 0;
+}
+
+.comparisonSubtitle {
+  color: var(--muted);
+  font-size: 0.84rem;
+  margin: 0;
+}
+
+.comparisonGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s5);
+  margin-top: var(--s5);
+}
+
+.comparisonCard {
+  background: #fafbf9;
+  border: var(--line);
+  padding: var(--s5);
+  display: grid;
+  gap: var(--s4);
+}
+
+.candidateHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.candidateCardName {
+  font-size: 1.15rem;
+  font-weight: 780;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.candidateCardRole {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 2px 0 0;
+}
+
+.scorePill {
+  display: inline-flex;
+  padding: 4px 8px;
+  background: var(--forest);
+  color: #f3fcf6;
+  font-size: 0.74rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+}
+
+.projectedMetric {
+  display: grid;
+  gap: 5px;
+  padding: var(--s3);
+  background: var(--surface);
+  border: var(--line);
+}
+
+.metricLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.metricValue {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--forest);
+}
+
+.comparisonRow {
+  display: grid;
+  gap: 4px;
+}
+
+.comparisonRow strong {
+  font-size: 0.76rem;
+  color: var(--text);
+}
+
+.detailText {
+  font-size: 0.82rem;
+  margin: 0;
+  color: var(--text);
+}
+
+.mutedText {
+  font-size: 0.76rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.successText {
+  font-size: 0.78rem;
+  color: #106b43;
+  font-weight: 700;
+}
+
+.comparisonFooterNote {
+  margin-top: var(--s4);
+  padding: var(--s3);
+  background: #f4f7f4;
+  border: var(--line);
+  font-size: 0.8rem;
+  color: var(--forest);
+}
+
+/* Shortlist Section */
+.shortlistSection {
+  margin-top: var(--s4);
+}
+
+.shortlistHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: var(--s3);
+  margin-bottom: var(--s4);
+}
+
+.sectionHeading {
+  font-size: 1.4rem;
+  letter-spacing: -0.04em;
+  margin: 2px 0;
+}
+
+.sectionDescription {
+  color: var(--muted);
+  font-size: 0.84rem;
+  margin: 0;
+}
+
+.comparisonBadge {
+  background: var(--mint);
+  border: 1px solid #b3e6c6;
+  color: #0d5f39;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+}
+
+.shortlistGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--s4);
+}
+
+.shortlistCard {
+  background: var(--surface);
+  border: var(--line);
+  padding: var(--s5);
+  display: grid;
+  gap: var(--s3);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.cardSelected {
+  border-color: var(--signal);
+  box-shadow: 0 0 0 2px rgb(30 174 114 / 25%);
+}
+
+.shortlistCardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--s3);
+  border-bottom: var(--line);
+}
+
+.compareCheckboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.compareCheckbox {
+  cursor: pointer;
+  accent-color: var(--signal);
+}
+
+.compareLabelText {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.statusControlGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusBadge {
+  display: inline-flex;
+  padding: 3px 7px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: var(--radius-sm);
+}
+
+.statusBadgeShortlisted {
+  background: #f0f4f1;
+  color: #2b563b;
+  border: 1px solid #c7d8cc;
+}
+
+.statusBadgeReview {
+  background: #fff8e6;
+  color: #925400;
+  border: 1px solid #fedb98;
+}
+
+.statusBadgeAdded {
+  background: var(--mint);
+  color: #0c5c36;
+  border: 1px solid #a8dfbc;
+}
+
+.statusSelect {
+  font-size: 0.74rem;
+  padding: 3px 6px;
+  border: var(--line);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+}
+
+.candidateDetails {
+  display: grid;
+  gap: 6px;
+}
+
+.subtleLabel {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.candidateSkillsBlock {
+  display: grid;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.availabilityRow {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.78rem;
+}
+
+.availabilityText {
+  color: var(--text);
+}
+
+.cardActionsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--s3);
+  border-top: var(--line);
+}
+
+.onTeamNotice {
+  font-size: 0.78rem;
+  color: #0f6744;
+  font-weight: 700;
+}
+
+.textButtonDanger {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.74rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 4px;
+}
+
+.textButtonDanger:hover {
+  color: var(--error);
+}
+
+/* Recommendations Pool Section */
+.recommendationsSection {
+  margin-top: var(--s6);
+  padding-top: var(--s6);
+  border-top: var(--line);
+}
+
+.recommendationsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--s4);
+  margin-top: var(--s4);
+}
+
+.poolCard {
+  background: var(--surface);
+  border: var(--line);
+  padding: var(--s4);
+  display: grid;
+  gap: var(--s3);
+}
+
+.poolCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.emptyCard {
+  background: var(--surface);
+  border: var(--line);
+  padding: var(--s8);
+  text-align: center;
+}
+
+.emptyText {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Buttons */
+.primaryButton {
+  background: var(--forest);
+  color: #ffffff;
+  border: 1px solid #0d281a;
+  padding: 8px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition);
+}
+
+.primaryButton:hover:not(:disabled) {
+  background: #1d4634;
+}
+
+.primaryButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.secondaryButton {
+  background: #ffffff;
+  color: var(--text);
+  border: var(--line);
+  padding: 7px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.secondaryButton:hover {
+  background: #f5f7f4;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .comparisonGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .teamTopRow {
+    flex-direction: column;
+  }
+
+  .shortlistGrid,
+  .recommendationsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
