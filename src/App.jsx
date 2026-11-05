@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link, NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import FeatureIntro from './components/FeatureIntro.jsx';
 import DesignPrototype from './components/DesignPrototype.jsx';
+import StudentDiscovery from './features/students/StudentDiscovery.jsx';
 
 const features = [
   {
@@ -85,7 +86,17 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/opportunities" replace />} />
           {features.map((feature) => (
-            <Route key={feature.path} path={feature.path} element={<FeatureIntro {...feature} />} />
+            <Route
+              key={feature.path}
+              path={feature.path}
+              element={
+                feature.path === '/students' ? (
+                  <StudentDiscovery />
+                ) : (
+                  <FeatureIntro {...feature} />
+                )
+              }
+            />
           ))}
           <Route path="/design" element={<DesignPrototype />} />
           <Route path="*" element={<section><h1>Page not found</h1><p>This address does not match a RoleRelay page.</p><Link to="/opportunities">Return to opportunities</Link></section>} />
