@@ -5,6 +5,7 @@ import DesignPrototype from './components/DesignPrototype.jsx';
 import OpportunityDiscovery from './features/opportunities/OpportunityDiscovery.jsx';
 import MatchingExplorer from './features/matching/MatchingExplorer.jsx';
 import StudentDiscovery from './features/students/StudentDiscovery.jsx';
+import RecruitmentWorkspace from './features/recruitment/RecruitmentWorkspace.jsx';
 
 const features = [
   {
@@ -91,8 +92,9 @@ export default function App() {
           <Route path="/opportunities/:opportunityId" element={<OpportunityDiscovery />} />
           <Route path="/students" element={<StudentDiscovery />} />
           <Route path="/matching" element={<MatchingExplorer />} />
+          <Route path="/workspace" element={<RecruitmentWorkspace />} />
           {features
-            .filter((feature) => !['/opportunities', '/students', '/matching'].includes(feature.path))
+            .filter((feature) => !['/opportunities', '/students', '/matching', '/workspace'].includes(feature.path))
             .map((feature) => (
               <Route key={feature.path} path={feature.path} element={<FeatureIntro {...feature} />} />
             ))}
