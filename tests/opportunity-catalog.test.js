@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import { loadOpportunityCatalog, validateOpportunityCatalog } from '../src/features/opportunities/catalog.js';
 
@@ -31,11 +32,21 @@ test('rejects an event without a required official source', () => {
       description: 'This record is intentionally incomplete for validation testing.',
       sourceUrl: '',
       registrationUrl: null,
-      lastVerifiedAt: '2026-11-05',
+      lastVerifiedAt: null,
+      isDemo: true,
     }],
   };
 
   assert.throws(() => validateOpportunityCatalog(catalog), /unsupported structure/);
+});
+
+test('the published catalog contains clearly marked demo opportunities', async () => {
+  const contents = await readFile(new URL('../public/events.json', import.meta.url), 'utf8');
+  const events = validateOpportunityCatalog(JSON.parse(contents));
+
+  assert.ok(events.length >= 3);
+  assert.ok(events.every((event) => event.isDemo && event.lastVerifiedAt === null));
+  assert.ok(events.every((event) => event.description.includes('not a real event')));
 });
 
 test('loads and validates a catalog through fetch', async () => {
