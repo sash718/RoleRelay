@@ -1,0 +1,622 @@
+/* Explainable Matching Explorer Styles */
+
+.explorerContainer {
+  display: grid;
+  gap: var(--s8);
+  max-width: 1120px;
+}
+
+.introSection {
+  border-bottom: var(--line);
+  padding-bottom: var(--s6);
+}
+
+.headerTitle {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.06em;
+  line-height: 1.05;
+  margin: 0 0 var(--s2);
+}
+
+.headerSubtitle {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 720px;
+  margin: 0;
+}
+
+.modelBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  margin-top: var(--s3);
+  border: 1px solid #c0d8c7;
+  border-radius: var(--radius-sm);
+  background: var(--mint);
+  color: #0e5b38;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Two-column workbench layout */
+.workbench {
+  display: grid;
+  grid-template-columns: minmax(320px, 390px) minmax(0, 1fr);
+  gap: var(--s6);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .workbench {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Configuration sidebar panel */
+.configPanel {
+  padding: var(--s6);
+  border: var(--line);
+  border-top: 3px solid var(--ink);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: var(--s6);
+}
+
+.configSectionHeading {
+  font-size: 1.15rem;
+  letter-spacing: -0.03em;
+  margin: 0 0 var(--s1);
+}
+
+.configDescription {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin: 0 0 var(--s4);
+}
+
+.controlGroup {
+  display: grid;
+  gap: var(--s2);
+}
+
+.controlLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.inputRow {
+  display: flex;
+  gap: var(--s2);
+}
+
+.textInput {
+  flex: 1;
+  padding: 8px 12px;
+  border: var(--line);
+  background: var(--paper);
+  color: var(--text);
+  font-size: 0.88rem;
+  border-radius: 4px;
+}
+
+.textInput:focus {
+  outline: 2px solid var(--signal);
+  background: #ffffff;
+}
+
+.addButton {
+  padding: 8px 14px;
+  border: 1px solid #1c5236;
+  background: var(--forest);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: opacity var(--transition);
+}
+
+.addButton:hover {
+  opacity: 0.9;
+}
+
+.pillsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pillItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  background: #f6f8f5;
+  border-radius: 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.pillRemoveBtn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0 2px;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.pillRemoveBtn:hover {
+  color: var(--error);
+}
+
+.memberToggleList {
+  display: grid;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.memberToggleItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fdfdfc;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.memberToggleItem:hover {
+  background: #f2f7f3;
+}
+
+.memberToggleItemActive {
+  border-color: var(--signal);
+  background: #eef8f2;
+}
+
+.memberCheckbox {
+  margin-top: 3px;
+  cursor: pointer;
+}
+
+.memberToggleContent {
+  display: grid;
+  gap: 2px;
+}
+
+.memberToggleName {
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.memberToggleSkills {
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+/* Results & Coverage Area */
+.resultsArea {
+  display: grid;
+  gap: var(--s6);
+}
+
+/* Coverage Ledger Banner */
+.coverageLedger {
+  padding: var(--s6);
+  border: var(--line);
+  border-top: 3px solid var(--signal);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.ledgerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s5);
+  padding-bottom: var(--s3);
+  border-bottom: var(--line);
+}
+
+.ledgerTitle {
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.coverageRatioTag {
+  padding: 4px 10px;
+  background: var(--mint);
+  color: #0e5b38;
+  font-size: 0.76rem;
+  font-weight: 800;
+  border-radius: 12px;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: var(--s4);
+  margin-bottom: var(--s5);
+}
+
+.statCard {
+  padding: 12px;
+  background: var(--paper);
+  border: var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.statLabel {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.statValue {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.gapListSection {
+  display: grid;
+  gap: var(--s3);
+}
+
+.gapCategory {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+}
+
+/* Candidate match cards list */
+.candidateList {
+  display: grid;
+  gap: var(--s5);
+}
+
+.candidateCard {
+  padding: var(--s6);
+  border: var(--line);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  display: grid;
+  gap: var(--s4);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.topCandidate {
+  border-left: 4px solid var(--signal);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--s4);
+}
+
+.candidateMeta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rankBadge {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--forest);
+}
+
+.candidateName {
+  font-size: 1.15rem;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.candidateIdTag {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin: 2px 0 0;
+}
+
+.scoreContainer {
+  text-align: right;
+}
+
+.scoreBadge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  padding: 6px 12px;
+  background: #f0f7f2;
+  border: 1px solid #b7debe;
+  border-radius: 8px;
+}
+
+.scoreValue {
+  font-size: 1.5rem;
+  font-weight: 850;
+  color: var(--forest);
+}
+
+.scoreMax {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.scoreLabel {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.explanationBox {
+  padding: 12px 14px;
+  background: #fafaf7;
+  border-left: 3px solid #3f73db;
+  border-radius: 2px;
+}
+
+.explanationText {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.skillsSection {
+  display: grid;
+  gap: 10px;
+}
+
+.skillGroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.skillGroupLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tag {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.tagContributed {
+  background: #ddf5e5;
+  border: 1px solid #a1dcb2;
+  color: #0f613c;
+}
+
+.tagRedundant {
+  background: #f0f0eb;
+  border: 1px solid #d4d4cb;
+  color: #646459;
+}
+
+.tagExtra {
+  background: #f3f5f8;
+  border: 1px solid #cfd7e4;
+  color: #3b506e;
+}
+
+.reasonsSection {
+  display: grid;
+  gap: 6px;
+}
+
+.reasonsList, .cautionList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.reasonItem {
+  font-size: 0.8rem;
+  color: #174b2f;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reasonMarker {
+  font-weight: 800;
+  color: var(--signal);
+}
+
+.cautionItem {
+  font-size: 0.8rem;
+  color: #8c5300;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cautionMarker {
+  font-weight: 800;
+  color: var(--warning);
+}
+
+/* Breakdown toggle */
+.breakdownToggleContainer {
+  border-top: var(--line);
+  padding-top: var(--s3);
+}
+
+.breakdownButton {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.breakdownButton:hover {
+  color: var(--text);
+}
+
+.breakdownPanel {
+  margin-top: var(--s3);
+  padding: 14px;
+  background: #f6f8f5;
+  border: var(--line);
+  border-radius: 6px;
+  display: grid;
+  gap: 10px;
+}
+
+.breakdownRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s4);
+  font-size: 0.78rem;
+}
+
+.breakdownDetail {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.breakdownScore {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.breakdownTotal {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  font-size: 0.84rem;
+}
+
+/* State Dots */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dotKnown {
+  background: var(--signal);
+}
+
+.dotMuted {
+  background: #a0aba3;
+}
+
+.dotExtra {
+  background: #5a7698;
+}
+
+.dotMissing {
+  border: 1px solid var(--error);
+  background: transparent;
+}
+
+/* Empty states */
+.emptyNotice {
+  padding: var(--s8);
+  border: var(--line);
+  background: var(--surface);
+  text-align: center;
+  display: grid;
+  gap: var(--s3);
+  place-items: center;
+}
+
+.emptyHeading {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.emptyText {
+  color: var(--muted);
+  font-size: 0.88rem;
+  max-width: 500px;
+  margin: 0;
+}
+
+/* Methodology note */
+.methodologySection {
+  margin-top: var(--s8);
+  padding: var(--s6);
+  background: #edf2ed;
+  border-left: 4px solid var(--forest);
+}
+
+.methodologyHeading {
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--s2);
+}
+
+.methodologyText {
+  font-size: 0.84rem;
+  color: #313f36;
+  line-height: 1.6;
+  margin: 0;
+}
+
