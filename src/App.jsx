@@ -4,6 +4,7 @@ import FeatureIntro from './components/FeatureIntro.jsx';
 import DesignPrototype from './components/DesignPrototype.jsx';
 import OpportunityDiscovery from './features/opportunities/OpportunityDiscovery.jsx';
 import MatchingExplorer from './features/matching/MatchingExplorer.jsx';
+import TeamCreation from './features/teams/TeamCreation.jsx';
 
 const features = [
   {
@@ -88,9 +89,10 @@ export default function App() {
           <Route path="/" element={<Navigate to="/opportunities" replace />} />
           <Route path="/opportunities" element={<OpportunityDiscovery />} />
           <Route path="/opportunities/:opportunityId" element={<OpportunityDiscovery />} />
+          <Route path="/team" element={<TeamCreation />} />
           <Route path="/matching" element={<MatchingExplorer />} />
           {features
-            .filter((feature) => feature.path !== '/opportunities' && feature.path !== '/matching')
+            .filter((feature) => feature.path !== '/opportunities' && feature.path !== '/matching' && feature.path !== '/team')
             .map((feature) => (
               <Route key={feature.path} path={feature.path} element={<FeatureIntro {...feature} />} />
             ))}
