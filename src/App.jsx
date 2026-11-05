@@ -4,6 +4,8 @@ import FeatureIntro from './components/FeatureIntro.jsx';
 import DesignPrototype from './components/DesignPrototype.jsx';
 import OpportunityDiscovery from './features/opportunities/OpportunityDiscovery.jsx';
 import MatchingExplorer from './features/matching/MatchingExplorer.jsx';
+import StudentDiscovery from './features/students/StudentDiscovery.jsx';
+import TeamCreation from './features/teams/TeamCreation.jsx';
 
 const features = [
   {
@@ -18,7 +20,7 @@ const features = [
     path: '/students',
     label: 'Students',
     title: 'Explore possible contributors.',
-    description: 'Future local candidate discovery will live here.',
+    description: 'Preview the planned local directory for candidate profiles, skills, and contribution details.',
     owner: 'Member 2',
     scope: 'Local candidate profiles, skill filters, and contribution details.',
   },
@@ -54,7 +56,11 @@ export default function App() {
 
   useEffect(() => {
     const feature = features.find((item) => item.path === pathname);
-    const pageTitle = pathname === '/design' ? 'Design preview' : feature?.label ?? 'Page not found';
+    const pageTitle = pathname === '/design'
+      ? 'Design preview'
+      : pathname.startsWith('/opportunities/')
+        ? 'Opportunities'
+        : feature?.label ?? 'Page not found';
     document.title = `${pageTitle} | RoleRelay`;
     mainRef.current?.focus();
   }, [pathname]);
@@ -88,9 +94,11 @@ export default function App() {
           <Route path="/" element={<Navigate to="/opportunities" replace />} />
           <Route path="/opportunities" element={<OpportunityDiscovery />} />
           <Route path="/opportunities/:opportunityId" element={<OpportunityDiscovery />} />
+          <Route path="/students" element={<StudentDiscovery />} />
+          <Route path="/team" element={<TeamCreation />} />
           <Route path="/matching" element={<MatchingExplorer />} />
           {features
-            .filter((feature) => feature.path !== '/opportunities' && feature.path !== '/matching')
+            .filter((feature) => !['/opportunities', '/students', '/team', '/matching'].includes(feature.path))
             .map((feature) => (
               <Route key={feature.path} path={feature.path} element={<FeatureIntro {...feature} />} />
             ))}

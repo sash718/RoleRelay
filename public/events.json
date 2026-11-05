@@ -1,5 +1,51 @@
 {
   "catalogVersion": 1,
   "lastCheckedAt": "2026-11-05",
-  "events": []
+  "events": [
+    {
+      "id": "civic-data-sprint-demo",
+      "title": "Civic Data Sprint",
+      "organizer": "RoleRelay demo",
+      "category": "Civic technology",
+      "mode": "online",
+      "location": "Online",
+      "startsAt": "2027-02-20",
+      "registrationDeadline": "2027-02-15",
+      "description": "Fictional demonstration opportunity: form a small team to explore a public-service challenge and prototype a data-informed solution. This is sample content, not a real event.",
+      "sourceUrl": "https://example.com/rolerelay-demo/civic-data-sprint",
+      "registrationUrl": null,
+      "lastVerifiedAt": null,
+      "isDemo": true
+    },
+    {
+      "id": "campus-climate-buildathon-demo",
+      "title": "Campus Climate Buildathon",
+      "organizer": "RoleRelay demo",
+      "category": "Sustainability",
+      "mode": "hybrid",
+      "location": "Online and campus",
+      "startsAt": "2027-03-13",
+      "registrationDeadline": "2027-03-08",
+      "description": "Fictional demonstration opportunity: build a practical concept for reducing waste or energy use in a campus community. This is sample content, not a real event.",
+      "sourceUrl": "https://example.com/rolerelay-demo/campus-climate-buildathon",
+      "registrationUrl": null,
+      "lastVerifiedAt": null,
+      "isDemo": true
+    },
+    {
+      "id": "accessible-web-weekend-demo",
+      "title": "Accessible Web Weekend",
+      "organizer": "RoleRelay demo",
+      "category": "Accessibility",
+      "mode": "offline",
+      "location": "Bengaluru",
+      "startsAt": "2027-04-10",
+      "registrationDeadline": "2027-04-05",
+      "description": "Fictional demonstration opportunity: collaborate on a small web prototype that makes a common online task easier to use. This is sample content, not a real event.",
+      "sourceUrl": "https://example.com/rolerelay-demo/accessible-web-weekend",
+      "registrationUrl": null,
+      "lastVerifiedAt": null,
+      "isDemo": true
+    }
+  ]
 }

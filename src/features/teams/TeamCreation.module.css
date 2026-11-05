@@ -1,0 +1,684 @@
+.container {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: var(--s8);
+  align-items: end;
+  padding-bottom: var(--s8);
+  border-bottom: var(--line);
+  margin-bottom: var(--s6);
+}
+
+.headerContent h1 {
+  margin: 0 0 var(--s2);
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  letter-spacing: -0.065em;
+  line-height: 1.05;
+}
+
+.headerSubtitle {
+  margin: 0;
+  max-width: 640px;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.headerMetaCard {
+  padding: var(--s4) var(--s5);
+  background: var(--surface);
+  border: var(--line);
+  border-left: 3px solid var(--forest);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metaLabel {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.metaValue {
+  font-size: 1rem;
+  color: var(--forest);
+  font-weight: 750;
+}
+
+.metaOppName {
+  font-size: 0.78rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Notification banner */
+.notificationBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding: var(--s3) var(--s5);
+  margin-bottom: var(--s6);
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  border: 1px solid var(--border);
+}
+
+.notificationBanner p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.notificationDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.notificationInfo {
+  background: #f0f4f1;
+  color: var(--forest);
+  border-color: #c9d8ce;
+}
+.notificationInfo .notificationDot {
+  background: var(--forest);
+}
+
+.notificationSuccess {
+  background: var(--mint);
+  color: #0c5738;
+  border-color: #a4dcba;
+}
+.notificationSuccess .notificationDot {
+  background: var(--signal);
+}
+
+.notificationError {
+  background: #fef3f2;
+  color: var(--error);
+  border-color: #fecdca;
+}
+.notificationError .notificationDot {
+  background: var(--error);
+}
+
+/* Two-column workbench */
+.workbenchGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: var(--s6);
+  align-items: start;
+}
+
+.cardPanel {
+  background: var(--surface);
+  border: var(--line);
+  box-shadow: var(--shadow);
+  padding: var(--s6);
+}
+
+.sectionHeading {
+  margin-bottom: var(--s5);
+  padding-bottom: var(--s4);
+  border-bottom: var(--line);
+}
+
+.sectionHeading h2 {
+  margin: 0 0 4px;
+  font-size: 1.35rem;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.sectionHeading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+/* Form controls */
+.fieldGroup {
+  margin-bottom: var(--s5);
+}
+
+.fieldLabel {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.requiredAsterisk {
+  color: var(--error);
+}
+
+.fieldDescription {
+  margin: 0 0 8px;
+  font-size: 0.77rem;
+  color: var(--muted);
+}
+
+.textInput, .selectInput, .numberInput {
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 12px;
+  background: #fcfcfb;
+  border: var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.88rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.textInput:focus, .selectInput:focus, .numberInput:focus {
+  outline: none;
+  border-color: var(--signal);
+  box-shadow: 0 0 0 3px rgb(30 174 114 / 15%);
+}
+
+.inputError {
+  border-color: var(--error) !important;
+}
+
+.errorText {
+  margin: 5px 0 0;
+  color: var(--error);
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.helpText {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.selectedOppSummary {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #f7f9f6;
+  border-left: 2px solid var(--signal);
+  font-size: 0.78rem;
+}
+
+.oppCategory {
+  display: inline-block;
+  padding: 2px 6px;
+  background: var(--mint);
+  color: #0d6945;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-right: 6px;
+}
+
+.oppMode {
+  color: var(--muted);
+  font-size: 0.72rem;
+  text-transform: capitalize;
+}
+
+.selectedOppSummary p {
+  margin: 4px 0 0;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.capacityInputRow {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+}
+
+.numberInput {
+  width: 90px;
+}
+
+.capacityHint {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Skill pills & editor */
+.skillInputRow {
+  display: flex;
+  gap: var(--s2);
+  margin-bottom: var(--s3);
+}
+
+.skillPillsContainer {
+  margin-top: var(--s2);
+}
+
+.skillList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skillPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: #edf5f0;
+  border: 1px solid #c8e4d3;
+  border-radius: 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--forest);
+}
+
+.skillRemoveButton {
+  border: none;
+  background: transparent;
+  color: #7b9485;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.skillRemoveButton:hover {
+  color: var(--error);
+}
+
+.emptyNotice {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Members Section */
+.capacityCard {
+  background: #f7f9f6;
+  border: var(--line);
+  padding: var(--s4);
+  margin-bottom: var(--s5);
+}
+
+.capacityMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s3);
+}
+
+.capacityLabel {
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.capacityValue {
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--forest);
+}
+
+.statusBadge {
+  font-size: 0.72rem;
+  font-weight: 750;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.statusBadgeOpen {
+  background: var(--mint);
+  color: #0f6744;
+}
+
+.statusBadgeFull {
+  background: #fef0c7;
+  color: #93370d;
+}
+
+.progressBarBg {
+  width: 100%;
+  height: 6px;
+  background: #e2e8e3;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: var(--signal);
+  transition: width 240ms ease;
+}
+
+.progressBarFillFull {
+  background: #d97706;
+}
+
+.addMemberBlock {
+  margin-bottom: var(--s5);
+  padding-bottom: var(--s5);
+  border-bottom: var(--line);
+}
+
+.addMemberForm {
+  display: flex;
+  gap: var(--s2);
+  margin-top: 6px;
+}
+
+.warningNote {
+  margin: 6px 0 0;
+  padding: 8px 12px;
+  background: #fffbeb;
+  border-left: 3px solid #d97706;
+  color: #92400e;
+  font-size: 0.8rem;
+}
+
+/* Roster */
+.rosterContainer {
+  margin-top: var(--s4);
+}
+
+.rosterHeading {
+  margin: 0 0 var(--s3);
+  font-size: 0.95rem;
+  letter-spacing: -0.02em;
+  color: var(--forest);
+}
+
+.emptyRosterCard {
+  text-align: center;
+  padding: var(--s6) var(--s4);
+  border: 1px dashed var(--border);
+  background: #fbfbf9;
+}
+
+.emptyRosterIcon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.emptyRosterCard h4 {
+  margin: 0 0 4px;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+
+.emptyRosterCard p {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.rosterList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+
+.memberCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s3);
+  padding: var(--s3) var(--s4);
+  background: #fbfcfb;
+  border: var(--line);
+  border-left: 3px solid var(--forest);
+}
+
+.memberInfo {
+  min-width: 0;
+  flex: 1;
+}
+
+.memberNameRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.memberName {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.memberRole {
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.memberSkillsRow {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+.skillsTagLabel {
+  font-size: 0.68rem;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.memberSkillTag {
+  font-size: 0.68rem;
+  padding: 1px 6px;
+  background: #eef2ef;
+  border-radius: 4px;
+  color: var(--text);
+}
+
+.missingMemberCard {
+  background: #fffafa;
+  border-left-color: var(--error);
+}
+
+.missingBadge {
+  font-size: 0.7rem;
+  font-weight: 750;
+  color: var(--error);
+  background: #fee4e2;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.memberIdTag {
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-family: monospace;
+}
+
+.missingNotice {
+  margin: 4px 0 0;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.removeMemberButton {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.removeMemberButton:hover {
+  background: #fff1f0;
+  border-color: #fecdca;
+  color: var(--error);
+}
+
+/* Buttons */
+.primaryButton {
+  min-height: 40px;
+  padding: 0 var(--s5);
+  background: var(--forest);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.primaryButton:hover {
+  background: #0f271c;
+}
+
+.secondaryButton {
+  min-height: 40px;
+  padding: 0 var(--s4);
+  background: #eef4f0;
+  color: var(--forest);
+  border: 1px solid #b7d6c3;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+
+.secondaryButton:hover:not(:disabled) {
+  background: var(--mint);
+  border-color: var(--signal);
+}
+
+.secondaryButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.resetButton {
+  min-height: 40px;
+  padding: 0 var(--s4);
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.resetButton:hover {
+  background: #f2f2ef;
+  color: var(--text);
+}
+
+.navLinkButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 var(--s4);
+  background: var(--mint);
+  color: #0c5939;
+  border: 1px solid #99d2b2;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 750;
+  text-decoration: none;
+  transition: all var(--transition);
+}
+
+.navLinkButton:hover {
+  background: #c3ebd2;
+}
+
+/* Sticky actions bar */
+.actionsBar {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s4);
+  margin-top: var(--s8);
+  padding: var(--s4) var(--s6);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: var(--line);
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.04);
+}
+
+.actionsInfo strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.actionsInfo span {
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.actionsButtons {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  flex-wrap: wrap;
+}
+
+/* Responsiveness */
+@media (max-width: 900px) {
+  .header {
+    grid-template-columns: 1fr;
+  }
+  .workbenchGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .actionsBar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--s3);
+  }
+  .actionsButtons {
+    flex-direction: column;
+  }
+  .actionsButtons > * {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .skillInputRow, .addMemberForm {
+    flex-direction: column;
+  }
+}
+
