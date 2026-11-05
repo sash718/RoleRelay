@@ -68,67 +68,93 @@ export default function OpportunityDiscovery() {
   return (
     <section className={styles.discovery} aria-labelledby="opportunities-title">
       <header className={styles.hero}>
-        <div>
-          <p className="eyebrow">Opportunity dossier</p>
-          <h1 id="opportunities-title">Find an opportunity worth building for.</h1>
-          <p>Browse a manually curated catalog. Each record keeps its official source and last-check date visible.</p>
+        <div className={styles.heroCopy}>
+          <p className={styles.heroEyebrow}><span /> Opportunity board <span className={styles.eyebrowDivider}>/</span> 2027</p>
+          <h1 id="opportunities-title">Ideas are everywhere.<br /><span>Build one.</span></h1>
+          <p>Find a challenge that sparks something. Explore the sample briefs, picture your team, and start with an idea worth making real.</p>
+          <div className={styles.heroFooter}>
+            <span className={styles.demoIndicator}><span /> Demo catalogue</span>
+            <span>Fictional examples · Not open for registration</span>
+          </div>
         </div>
-        <p className={styles.catalogNote}>Not a live feed<br /><span>Information may change at the official source.</span></p>
+        <div className={styles.heroArt} aria-hidden="true">
+          <div className={styles.artOrbit} />
+          <div className={styles.artOrb}><span>R</span></div>
+          <div className={`${styles.artTag} ${styles.artTagTop}`}>THINK<br />BIGGER</div>
+          <div className={`${styles.artTag} ${styles.artTagBottom}`}>MAKE IT<br />MATTER <span>↗</span></div>
+          <span className={`${styles.artSpark} ${styles.artSparkOne}`} />
+          <span className={`${styles.artSpark} ${styles.artSparkTwo}`} />
+        </div>
       </header>
 
-      <section className={styles.filters} aria-label="Filter opportunities">
-        <label className={styles.searchLabel}>
-          <span>Search the catalog</span>
-          <input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Title, organiser, or category" type="search" />
-        </label>
-        <label>
-          <span>Category</span>
-          <select value={category} onChange={(event) => setCategory(event.target.value)}>
-            <option value="all">All categories</option>
-            {categories.map((item) => <option key={item} value={item}>{item}</option>)}
-          </select>
-        </label>
-        <label>
-          <span>Format</span>
-          <select value={mode} onChange={(event) => setMode(event.target.value)}>
-            <option value="all">All formats</option>
-            <option value="online">Online</option>
-            <option value="offline">In person</option>
-            <option value="hybrid">Hybrid</option>
-          </select>
-        </label>
-        <label className={styles.checkboxLabel}>
-          <input checked={upcomingOnly} onChange={(event) => setUpcomingOnly(event.target.checked)} type="checkbox" />
-          <span>Upcoming only</span>
-        </label>
+      <section className={styles.browseSection} aria-label="Browse opportunities">
+        <div className={styles.browseHeading}>
+          <div>
+            <p className={styles.sectionEyebrow}>A good place to start</p>
+            <h2>Pick a challenge.<br /><span>Make it yours.</span></h2>
+          </div>
+          <p className={styles.browseIntro}>A few starting points for curious people who would rather build than just brainstorm.</p>
+        </div>
+
+        <section className={styles.filters} aria-label="Filter opportunities">
+          <label className={styles.searchLabel}>
+            <span>Find your next idea</span>
+            <input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search title, organiser, or category" type="search" />
+          </label>
+          <label>
+            <span>Category</span>
+            <select value={category} onChange={(event) => setCategory(event.target.value)}>
+              <option value="all">All categories</option>
+              {categories.map((item) => <option key={item} value={item}>{item}</option>)}
+            </select>
+          </label>
+          <label>
+            <span>Format</span>
+            <select value={mode} onChange={(event) => setMode(event.target.value)}>
+              <option value="all">All formats</option>
+              <option value="online">Online</option>
+              <option value="offline">In person</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </label>
+          <label className={styles.checkboxLabel}>
+            <input checked={upcomingOnly} onChange={(event) => setUpcomingOnly(event.target.checked)} type="checkbox" />
+            <span>Upcoming only</span>
+          </label>
+        </section>
       </section>
 
       {status === 'loading' && <StatusPanel title="Loading the catalog" message="Retrieving the locally maintained opportunity catalog." />}
       {status === 'error' && <StatusPanel title="Catalog unavailable" message={errorMessage} action={<button type="button" onClick={fetchCatalog}>Try again</button>} />}
-      {status === 'ready' && events.length === 0 && <StatusPanel title="No sourced opportunities yet" message="The catalog is ready, but no event has been added until its official details can be checked. Check back after the catalog is updated." />}
+      {status === 'ready' && events.length === 0 && <StatusPanel title="No opportunities to show" message="There are no opportunities in the catalogue right now. Check back when it has been updated." />}
       {status === 'ready' && events.length > 0 && visibleEvents.length === 0 && <StatusPanel title="No opportunities match these filters" message="Try a broader search or clear one of the filters." action={<button type="button" onClick={() => { setSearchTerm(''); setCategory('all'); setMode('all'); setUpcomingOnly(true); }}>Reset filters</button>} />}
       {status === 'ready' && visibleEvents.length > 0 && (
-        <div className={styles.results} aria-live="polite">
-          <p>{visibleEvents.length} {visibleEvents.length === 1 ? 'opportunity' : 'opportunities'} shown</p>
-          <div className={styles.cardGrid}>{visibleEvents.map((event) => <OpportunityCard event={event} key={event.id} />)}</div>
+        <div className={styles.results} id="opportunity-results" aria-live="polite">
+          <div className={styles.resultsHeading}>
+            <p><span>{String(visibleEvents.length).padStart(2, '0')}</span> {visibleEvents.length === 1 ? 'opportunity' : 'opportunities'} to explore</p>
+            <span>DEMO BRIEFS</span>
+          </div>
+          <div className={styles.cardGrid}>{visibleEvents.map((event, index) => <OpportunityCard event={event} index={index} key={event.id} />)}</div>
         </div>
       )}
     </section>
   );
 }
 
-function OpportunityCard({ event }) {
+function OpportunityCard({ event, index }) {
   return (
     <article className={styles.card}>
-      <div className={styles.cardMeta}><span>{event.category}</span><span>{event.mode}</span></div>
-      <h2>{event.title}</h2>
-      <p className={styles.organizer}>{event.organizer}</p>
+      <div className={styles.cardTopline}>
+        <span className={styles.cardIndex}>0{index + 1}</span>
+        <span className={styles.demoBadge}>Demo brief</span>
+      </div>
+      <div className={styles.cardMeta}><span>{event.category}</span><span>{event.mode === 'offline' ? 'In person' : event.mode}</span></div>
+      <h3>{event.title}</h3>
       <p className={styles.description}>{event.description}</p>
-      <dl className={styles.facts}>
-        <div><dt>Starts</dt><dd>{formatDate(event.startsAt)}</dd></div>
-        <div><dt>Location</dt><dd>{event.location || 'See official source'}</dd></div>
-      </dl>
-      <Link className={styles.detailLink} to={`/opportunities/${event.id}`}>View opportunity <span aria-hidden="true">→</span></Link>
+      <div className={styles.cardFooter}>
+        <div className={styles.cardDate}><span>STARTING</span><strong>{formatDate(event.startsAt)}</strong></div>
+        <Link className={styles.detailLink} to={`/opportunities/${event.id}`} aria-label={`Explore ${event.title}`}>Explore <span aria-hidden="true">↗</span></Link>
+      </div>
     </article>
   );
 }
@@ -140,25 +166,38 @@ function OpportunityDetails({ event, status, errorMessage, onRetry }) {
 
   return (
     <article className={styles.detail}>
-      <Link className={styles.backLink} to="/opportunities">← All opportunities</Link>
-      <header>
-        <p className="eyebrow">{event.category} · {event.mode}</p>
-        <h1>{event.title}</h1>
-        <p className={styles.organizer}>{event.organizer}</p>
+      <Link className={styles.backLink} to="/opportunities"><span aria-hidden="true">←</span> All opportunities</Link>
+      <header className={styles.detailHero}>
+        <div className={styles.detailHeroCopy}>
+          <div className={styles.detailBadges}>
+            <span>{event.category}</span>
+            <span>{event.mode === 'offline' ? 'In person' : event.mode}</span>
+            {event.isDemo && <span className={styles.detailDemoBadge}>Demo brief</span>}
+          </div>
+          <p className={styles.detailOverline}>THE CHALLENGE</p>
+          <h1>{event.title}</h1>
+          <p className={styles.detailDeck}>A starting point for your next big idea.</p>
+        </div>
+        <div className={styles.detailStamp} aria-hidden="true"><span>MAKE</span><strong>IT<br />MATTER</strong><i>↗</i></div>
       </header>
       <div className={styles.detailGrid}>
-        <section><h2>About this opportunity</h2><p>{event.description}</p></section>
+        <section className={styles.detailAbout}>
+          <p className={styles.sectionEyebrow}>THE BRIEF</p>
+          <h2>What could you make?</h2>
+          <p>{event.description}</p>
+          {event.isDemo && <p className={styles.demoNotice}>This is fictional demonstration content—not a real event. Dates, organiser, and links are examples only.</p>}
+        </section>
         <dl className={styles.detailFacts}>
-          <div><dt>Starts</dt><dd>{formatDate(event.startsAt)}</dd></div>
-          <div><dt>Registration deadline</dt><dd>{formatDate(event.registrationDeadline)}</dd></div>
-          <div><dt>Location</dt><dd>{event.location || 'See official source'}</dd></div>
-          <div><dt>Last checked</dt><dd>{formatDate(event.lastVerifiedAt)}</dd></div>
+          <div><dt>WHEN</dt><dd>{formatDate(event.startsAt)}</dd></div>
+          <div><dt>REGISTRATION CLOSES</dt><dd>{formatDate(event.registrationDeadline)}</dd></div>
+          <div><dt>WHERE</dt><dd>{event.location || 'See opportunity details'}</dd></div>
+          <div><dt>ORGANISER</dt><dd>{event.organizer}</dd></div>
         </dl>
       </div>
       <section className={styles.actions} aria-label="Opportunity actions">
-        <a href={event.sourceUrl} target="_blank" rel="noreferrer">Official source <span aria-hidden="true">↗</span></a>
+        {!event.isDemo && <a href={event.sourceUrl} target="_blank" rel="noreferrer">Official source <span aria-hidden="true">↗</span></a>}
         {event.registrationUrl && <a href={event.registrationUrl} target="_blank" rel="noreferrer">External registration <span aria-hidden="true">↗</span></a>}
-        <Link to={`/team?opportunity=${encodeURIComponent(event.id)}`}>Build a team</Link>
+        <Link to={`/team?opportunity=${encodeURIComponent(event.id)}`}>Plan a team <span aria-hidden="true">↗</span></Link>
       </section>
     </article>
   );
